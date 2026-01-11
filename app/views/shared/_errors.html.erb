@@ -1,0 +1,9 @@
+<% if errors.present? %>
+  <div id="errors-display" class="alert alert-danger mt-3">
+    <ul class="mb-0">
+      <% errors.each do |error| %>
+        <li><%= error %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

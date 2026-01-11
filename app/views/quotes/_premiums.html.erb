@@ -1,0 +1,47 @@
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+  <% premiums.each_with_index do |premium, index| %>
+    <% is_highlighted = premium.cover_type == "standard" # or index == 1 %>
+    <div class="relative flex flex-col p-8 bg-white rounded-2xl shadow-xl transition-transform hover:-translate-y-1 <%= 'ring-2 ring-indigo-600 transform scale-105 z-10' if is_highlighted %>">
+
+      <% if is_highlighted %>
+        <div class="absolute top-0 right-0 -mr-1 -mt-1 w-24 h-24 overflow-hidden rounded-tr-2xl">
+          <div class="absolute top-0 right-0 bg-indigo-600 text-white text-xs font-bold px-8 py-1 transform rotate-45 translate-x-4 translate-y-3">
+            POPULAR
+          </div>
+        </div>
+      <% end %>
+
+      <h3 class="text-lg font-semibold text-gray-900 uppercase tracking-wide"><%= premium.cover_label %></h3>
+
+      <div class="mt-4 flex items-baseline text-gray-900">
+        <span class="text-4xl font-extrabold tracking-tight">$<%= number_with_precision(premium.final_premium, precision: 2) %></span>
+      </div>
+      <p class="mt-1 text-sm text-gray-500">Total premium</p>
+
+      <ul class="mt-6 space-y-4 flex-1">
+        <li class="flex items-start">
+          <svg class="h-6 w-6 flex-shrink-0 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+          <span class="ml-3 text-sm text-gray-700">Base Premium: $<%= premium.base_premium.to_f.round(2) %></span>
+        </li>
+        <% if premium.cruise_addon > 0 %>
+          <li class="flex items-start">
+            <svg class="h-6 w-6 flex-shrink-0 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+            <span class="ml-3 text-sm text-gray-700">Cruise Cover Included</span>
+          </li>
+        <% end %>
+        <% if premium.snow_addon > 0 %>
+          <li class="flex items-start">
+            <svg class="h-6 w-6 flex-shrink-0 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+            <span class="ml-3 text-sm text-gray-700">Winter Sports Included</span>
+          </li>
+        <% end %>
+      </ul>
+
+      <div class="mt-8">
+        <%= button_to "Select #{premium.cover_label}", "#",
+                      class: "w-full block rounded-lg px-6 py-3 text-center text-sm font-semibold leading-6 shadow-sm hover:ring-2 hover:ring-offset-2 transition-all " +
+                        (is_highlighted ? "bg-indigo-600 text-white hover:bg-indigo-500 hover:ring-indigo-600" : "bg-indigo-50 text-indigo-700 hover:bg-indigo-100 hover:ring-indigo-200") %>
+      </div>
+    </div>
+  <% end %>
+</div>

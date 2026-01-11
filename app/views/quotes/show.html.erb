@@ -1,0 +1,72 @@
+<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-7xl mx-auto space-y-8">
+    <div class="bg-white rounded-xl shadow-sm p-6 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+      <div>
+        <h1 class="text-2xl font-bold text-gray-900">Your Quote Results</h1>
+        <p class="text-gray-500 mt-1">
+          For a <strong><%= @quote.age %> year old</strong> travelling to
+          <strong><%= @quote.destinations.map(&:label).to_sentence %></strong>
+          <%= l(@quote.start_date) %> to <%= l(@quote.end_date) %>
+        </p>
+      </div>
+    </div>
+
+    <div class="max-w-3xl mx-auto">
+      <%= form_with(model: @quote, url: premiums_quote_path(@quote), method: :patch,
+                    data: { controller: "autosubmit", turbo_stream: true }) do |f| %>
+
+        <div class="bg-indigo-900 rounded-2xl shadow-xl overflow-hidden text-white p-6 md:p-8 mb-10">
+          <h3 class="text-lg font-semibold mb-6 flex items-center">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+            Customise your trip
+          </h3>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <label class="flex items-center justify-between p-4 bg-indigo-800/50 rounded-xl cursor-pointer hover:bg-indigo-800 transition-colors border border-indigo-700">
+              <span class="flex flex-col">
+                <span class="font-medium text-white">Cruise Cover</span>
+                <span class="text-xs text-indigo-200 mt-1">Required for sea voyages</span>
+              </span>
+              <%= f.check_box :cruise,
+                              class: "h-6 w-6 rounded border-indigo-500 bg-indigo-900 text-indigo-400 focus:ring-offset-indigo-900",
+                              data: { action: "change->autosubmit#premiums" } %>
+            </label>
+
+            <div data-controller="toggle">
+              <label class="flex items-center justify-between p-4 bg-indigo-800/50 rounded-xl cursor-pointer hover:bg-indigo-800 transition-colors border border-indigo-700">
+                <span class="flex flex-col">
+                  <span class="font-medium text-white">Winter Sports</span>
+                  <span class="text-xs text-indigo-200 mt-1">Skiing and snowboarding</span>
+                </span>
+                <%= f.check_box :snow,
+                                class: "h-6 w-6 rounded border-indigo-500 bg-indigo-900 text-indigo-400 focus:ring-offset-indigo-900",
+                                data: { action: "change->autosubmit#submit change->toggle#toggle", toggle_target: "trigger" } %>
+              </label>
+
+              <div data-toggle-target="content" class="<%= 'hidden' unless @quote.snow? %>  mt-4 p-4 bg-indigo-800 rounded-lg space-y-3">
+                <div class="grid grid-cols-2 gap-3">
+                  <div>
+                    <label class="text-xs text-indigo-200 block mb-1">Start</label>
+                    <%= f.date_field :snow_start_date, min: f.object.start_date, max: f.object.end_date,
+                                     class: "w-full rounded bg-indigo-900 border-indigo-700 text-white text-sm",
+                                     data: { action: "change->autosubmit#premiums" } %>
+                  </div>
+                  <div>
+                    <label class="text-xs text-indigo-200 block mb-1">End</label>
+                    <%= f.date_field :snow_end_date, min: f.object.start_date, max: f.object.end_date,
+                                     class: "w-full rounded bg-indigo-900 border-indigo-700 text-white text-sm", data: { action: "change->autosubmit#premiums" } %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div id="premiums-display">
+      <%= render "premiums", premiums: @premiums %>
+    </div>
+
+  </div>
+</div>

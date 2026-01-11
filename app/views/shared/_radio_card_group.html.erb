@@ -1,0 +1,22 @@
+<%# Locals: form, field, collection, value_method, text_method %>
+
+<%= form.collection_radio_buttons field, collection, value_method, text_method do |b| %>
+  <div class="flex-1">
+    <%= b.radio_button class: "peer sr-only" %>
+
+    <%= b.label class: "group relative flex flex-col items-center justify-center py-4 px-2 text-sm font-medium text-center bg-white border-2 border-gray-200 rounded-xl cursor-pointer transition-all duration-200
+                     hover:bg-gray-50 hover:border-gray-300
+                     peer-checked:border-blue-600 peer-checked:bg-blue-50 peer-checked:text-blue-700 peer-checked:shadow-md" do %>
+
+      <%# Main Label Text %>
+      <span class="block font-bold text-gray-900">
+        <%= b.text %>
+      </span>
+
+      <div>
+        <div class="h-1.5 w-1.5 rounded-full bg-white opacity-0 transition-opacity peer-checked:opacity-100"></div>
+      </div>
+
+    <% end %>
+  </div>
+<% end %>
