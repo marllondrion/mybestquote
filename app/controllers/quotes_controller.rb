@@ -38,7 +38,6 @@ class QuotesController < ApplicationController
     @premiums = @quote.calculate_all_covers
   end
 
-  # TODO: Is not working
   # Updates addons and returns ALL cover premiums
   # Responds to: PATCH
   def premiums
