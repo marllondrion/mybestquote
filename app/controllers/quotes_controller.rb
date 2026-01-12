@@ -68,7 +68,6 @@ class QuotesController < ApplicationController
             # https://stimulus.hotwired.dev/
             # https://turbo.hotwired.dev/reference/streams
             turbo_stream.update("premiums-display", partial: "quotes/premiums", locals: { premiums: @premiums }),
-            turbo_stream.update("quote-details", partial: "quotes/details", locals: { quote: @quote }),
             turbo_stream.update("form-frame", partial: "quotes/form", locals: { quote: @quote })
           ]
         end
