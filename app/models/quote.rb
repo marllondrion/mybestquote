@@ -44,6 +44,8 @@ class Quote < ApplicationRecord
   delegate :calculate_all_covers,
            to: :calculator, allow_nil: false
 
+  before_save :unset_snow_dates, unless: :snow?
+
   def calculator = @calculator ||= PremiumCalculatorService.new(self)
 
   def allow_travel_free? = (0..16).include?(age)
@@ -77,6 +79,7 @@ class Quote < ApplicationRecord
   # @return [Destination, nil] destination in the specified zone
   def destination_for_zone(zone_number) = destinations.find_by(zone: zone_number)
 
+  def requires_adult_supervision? = age.present? && age < CHILD_AGE_LIMIT_YEARS
   private
 
   def validate_trip_dates
@@ -106,7 +109,8 @@ class Quote < ApplicationRecord
   end
 
   def validate_snow_dates
-    return if snow_end_date || snow_start_date
+    return unless snow?
+    return unless snow_end_date && snow_start_date
 
     if snow_end_date < snow_start_date
       errors.add(:snow_end_date, "must be after ski start date")
@@ -121,7 +125,9 @@ class Quote < ApplicationRecord
     errors.add(:base, "At least one destination must be selected") if destinations.empty?
   end
 
-  def requires_adult_supervision? = age.present? && age < CHILD_AGE_LIMIT_YEARS
+  def unset_snow_dates
+    self.snow_end_date = self.snow_start_date = nil
+  end
 
   def humanize_duration(duration) = ActiveSupport::Duration.build(duration).inspect
 end

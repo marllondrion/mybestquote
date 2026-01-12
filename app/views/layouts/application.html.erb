@@ -25,8 +25,13 @@
 </head>
 <body>
 <%= render "shared/header" %>
+
 <main class="flex-1">
-  <div class="max-w-7xl mx-auto px-1 py-8">
+
+  <div class="max-w-7xl mx-auto px-1 py-8 bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+
+    <div id="errors-display" ></div>
+
     <%= yield %>
   </div>
 </main>

@@ -22,13 +22,13 @@ class QuotesController < ApplicationController
     else
 
       respond_to do |format|
-        format.html { render :new, status: :unprocessable_entity }
         format.turbo_stream do
           render turbo_stream: [
             turbo_stream.update("form-frame", partial: "quotes/form", locals: { quote: @quote }),
             turbo_stream.update("errors-display", partial: "shared/errors", locals: { errors: @quote.errors.full_messages })
           ]
         end
+        format.html { render :new, status: :unprocessable_entity }
       end
     end
   end
@@ -61,13 +61,9 @@ class QuotesController < ApplicationController
           }
         end
 
-        #
         format.turbo_stream do
           render turbo_stream: [
-            # https://stimulus.hotwired.dev/
-            # https://turbo.hotwired.dev/reference/streams
-            turbo_stream.update("premiums-display", partial: "quotes/premiums", locals: { premiums: @premiums }),
-            turbo_stream.update("form-frame", partial: "quotes/form", locals: { quote: @quote })
+            turbo_stream.update("premiums-display", partial: "quotes/premiums", locals: { premiums: @premiums })
           ]
         end
       end
