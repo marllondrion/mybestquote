@@ -121,7 +121,7 @@ class QuotesController < ApplicationController
 
   def covers =@covers ||= Cover.all.order(:multiplier)
 
-  def all_cover_premiums =@quote.calculate_all_covers
+  def all_cover_premiums = @quote.calculate_all_covers
 
   def quote_params
     params.require(:quote).permit(
