@@ -29,7 +29,7 @@
               </span>
               <%= f.check_box :cruise,
                               class: "h-6 w-6 rounded border-indigo-500 bg-indigo-900 text-indigo-400 focus:ring-offset-indigo-900",
-                              data: { action: "change->autosubmit#premiums" } %>
+                              data: { action: "change->autosubmit#submit" } %>
             </label>
 
             <div data-controller="toggle">
@@ -40,7 +40,7 @@
                 </span>
                 <%= f.check_box :snow,
                                 class: "h-6 w-6 rounded border-indigo-500 bg-indigo-900 text-indigo-400 focus:ring-offset-indigo-900",
-                                data: { action: "change->autosubmit#submit change->toggle#toggle", toggle_target: "trigger" } %>
+                                data: { action: "change->toggle#toggle", toggle_target: "trigger" } %>
               </label>
 
               <div data-toggle-target="content" class="<%= 'hidden' unless @quote.snow? %>  mt-4 p-4 bg-indigo-800 rounded-lg space-y-3">
@@ -49,12 +49,13 @@
                     <label class="text-xs text-indigo-200 block mb-1">Start</label>
                     <%= f.date_field :snow_start_date, min: f.object.start_date, max: f.object.end_date,
                                      class: "w-full rounded bg-indigo-900 border-indigo-700 text-white text-sm",
-                                     data: { action: "change->autosubmit#premiums" } %>
+                                     data: { action: "change->autosubmit#submit" } %>
                   </div>
                   <div>
                     <label class="text-xs text-indigo-200 block mb-1">End</label>
                     <%= f.date_field :snow_end_date, min: f.object.start_date, max: f.object.end_date,
-                                     class: "w-full rounded bg-indigo-900 border-indigo-700 text-white text-sm", data: { action: "change->autosubmit#premiums" } %>
+                                     class: "w-full rounded bg-indigo-900 border-indigo-700 text-white text-sm",
+                                     data: { action: "change->autosubmit#submit" } %>
                   </div>
                 </div>
               </div>
