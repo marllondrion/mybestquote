@@ -23,13 +23,13 @@
           <svg class="h-6 w-6 flex-shrink-0 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
           <span class="ml-3 text-sm text-gray-700">Base Premium: $<%= premium.base_premium.to_f.round(2) %></span>
         </li>
-        <% if premium.cruise_addon > 0 %>
+        <% if premium.cruise_addon.positive? %>
           <li class="flex items-start">
             <svg class="h-6 w-6 flex-shrink-0 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
             <span class="ml-3 text-sm text-gray-700">Cruise Cover Included</span>
           </li>
         <% end %>
-        <% if premium.snow_addon > 0 %>
+        <% if premium.snow_addon.positive? %>
           <li class="flex items-start">
             <svg class="h-6 w-6 flex-shrink-0 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
             <span class="ml-3 text-sm text-gray-700">Winter Sports Included</span>
