@@ -106,6 +106,8 @@ class Quote < ApplicationRecord
   end
 
   def validate_snow_dates
+    return if snow_end_date || snow_start_date
+
     if snow_end_date < snow_start_date
       errors.add(:snow_end_date, "must be after ski start date")
     end
