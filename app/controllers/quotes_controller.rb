@@ -134,8 +134,12 @@ class QuotesController < ApplicationController
     addon_params =  params.require(:quote).permit(:cruise, :snow, :snow_start_date, :snow_end_date)
 
     snow = ActiveModel:: Type:: Boolean.new.cast(addon_params[:snow])
-    addon_params[:snow_start_date] ||= @quote.start_date if snow
-    addon_params[:snow_end_date] ||= @quote.end_date if snow
+    if snow
+    addon_params[:snow_start_date] ||= @quote.start_date
+    addon_params[:snow_end_date] ||= @quote.end_date
+    else
+      addon_params[:snow_start_date] = addon_params[:snow_end_date] = nil
+    end
 
     addon_params
   end
